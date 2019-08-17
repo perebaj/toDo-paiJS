@@ -24,13 +24,26 @@ date.innerHTML = today.toLocaleDateString('pt-br', options) // retorna uma strin
 
 
 /*
+@BRIEF
+@param {element}
+@param {id}
+@param {done}
+@param {trash}
 */
-function add_toDo(element){
+function add_toDo(element, id, done, trash){
+  if(trash){ // se trash for true, nem adiciona a nova tarefa.
+    return;
+  }
+
+  const DONE = done ? CHECK_ : UNCHECK_
+  const LINE = done ? LINE_THROUGH_: ''
+
+
   const item = `
                     <li class='item'>
-                    <i class="fa fa-circle-thin co" job="complete" id="0"></i>
-                    <p class="text">${element}</p>
-                    <i class="fa fa-trash-o de" job="delete" id="0"></i>
+                    <i class="fa ${DONE} co" job="complete" id=${id}></i> 
+                    <p class="text ${LINE}">${element}</p>
+                    <i class="fa fa-trash-o de" job="delete" id=${id}></i> 
                     </li>
                 `
   const postion = 'beforeend'
@@ -42,8 +55,8 @@ document.addEventListener('keyup', function(event){
   if(event.keyCode === 13){ // enter key
     const toDo = input.value //salvar valor colocado no input
 
-    //valição
-    if(toDo.length === 0 || !toDo.trim())
+    //varificação
+    if(toDo.length === 0 || !toDo.trim()) // !trim() retorna true se a string tem espaços & retorta false se ela não tem.
       alert('insert toDo')
     else
       add_toDo(toDo)
@@ -54,3 +67,5 @@ document.addEventListener('keyup', function(event){
   }
     
 })
+
+add_toDo('teste', 1 , true, false)
