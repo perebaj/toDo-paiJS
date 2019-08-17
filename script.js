@@ -6,11 +6,13 @@ const list = document.getElementById('list')
 const input = document.getElementById('input')
 
 
-//class
-
+//classes
 const CHECK_ = 'fa-check-circle'
 const UNCHECK_ = 'fa-circle-thin'
 const LINE_THROUGH_ = 'lineThrough'
+// global varibles
+var LIST = []
+var id = 0
 
 //Data object
 const options = { 
@@ -58,8 +60,20 @@ document.addEventListener('keyup', function(event){
     //varificação
     if(toDo.length === 0 || !toDo.trim()) // !trim() retorna true se a string tem espaços & retorta false se ela não tem.
       alert('insert toDo')
-    else
-      add_toDo(toDo)
+    else{
+      add_toDo(toDo, id)
+
+      LIST.push({
+        name: toDo,
+        identificação: id,
+        done: false,
+        trash: false,
+      })
+      console.log(LIST);
+      
+      id++
+
+    }
 
     input.value = ''
   
@@ -68,4 +82,35 @@ document.addEventListener('keyup', function(event){
     
 })
 
-add_toDo('teste', 1 , true, false)
+//completar tarefa feita
+
+function completeToDo(elem){
+  elem.classList.toggle(CHECK_)
+  elem.classList.toggle(UNCHECK_)
+  elem.parentNode.querySelector('.text').classList.toggle(LINE_THROUGH_)
+
+  LIST[elem.identificação].done = LIST[elem.identificação].done ? false : true
+
+}
+
+// remover tarefa
+
+function remove(elem){
+  elem.parentNode.parentNode.removeChild(elem.parentNode)
+
+  LIST[elem.identificação].trash = true
+}
+
+
+// alvos dinâmicos
+
+list.addEventListener('click', function(event){
+  const element = event.target  // retorna o alvo clicado
+  const elementJob = element.attributes.job.value
+
+  if(elementJob === 'complete'){
+    completeToDo(element)
+  }
+  else if(elementJob === 'delete')
+    remove(element)
+})
