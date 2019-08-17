@@ -88,7 +88,7 @@ document.addEventListener('keyup', function(event){
 @param {elem} Elemento que recebe a validação
 */
 function completeToDo(elem){
-  console.log(elem.classList.toggle(CHECK_))
+  elem.classList.toggle(CHECK_)
   elem.classList.toggle(UNCHECK_)
   elem.parentNode.querySelector('.text').classList.toggle(LINE_THROUGH_)
 
