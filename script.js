@@ -38,5 +38,19 @@ function add_toDo(element){
   list.insertAdjacentHTML(postion,item)
 }
 
+document.addEventListener('keyup', function(event){
+  if(event.keyCode === 13){ // enter key
+    const toDo = input.value //salvar valor colocado no input
 
-add_toDo('twitter')
+    //valição
+    if(toDo.length === 0 || !toDo.trim())
+      alert('insert toDo')
+    else
+      add_toDo(toDo)
+
+    input.value = ''
+  
+    
+  }
+    
+})
