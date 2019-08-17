@@ -26,11 +26,11 @@ date.innerHTML = today.toLocaleDateString('pt-br', options) // retorna uma strin
 
 
 /*
-@BRIEF
-@param {element}
-@param {id}
-@param {done}
-@param {trash}
+@BRIEF adiciona uma tarefa, com a estruturação HTML 
+@param {element} nome do elemento que vai ser adiciona 
+@param {id} identificação do elemento
+@param {done} status do elemento, feito ou não feito
+@param {trash}  status do elemento apagado ou nao apagado
 */
 function add_toDo(element, id, done, trash){
   if(trash){ // se trash for true, nem adiciona a nova tarefa.
@@ -57,7 +57,7 @@ document.addEventListener('keyup', function(event){
   if(event.keyCode === 13){ // enter key
     const toDo = input.value //salvar valor colocado no input
 
-    //varificação
+    //verificação
     if(toDo.length === 0 || !toDo.trim()) // !trim() retorna true se a string tem espaços & retorta false se ela não tem.
       alert('insert toDo')
     else{
@@ -82,10 +82,13 @@ document.addEventListener('keyup', function(event){
     
 })
 
-//completar tarefa feita
 
+/*
+@BRIEF Valida a tarefa como feita ou não feita
+@param {elem} Elemento que recebe a validação
+*/
 function completeToDo(elem){
-  elem.classList.toggle(CHECK_)
+  console.log(elem.classList.toggle(CHECK_))
   elem.classList.toggle(UNCHECK_)
   elem.parentNode.querySelector('.text').classList.toggle(LINE_THROUGH_)
 
@@ -93,20 +96,23 @@ function completeToDo(elem){
 
 }
 
-// remover tarefa
-
+/*
+@BRIEF Remove a tarefa, setando trash com true
+@param {elem} elemento que vai ser removido
+*/
 function remove(elem){
-  elem.parentNode.parentNode.removeChild(elem.parentNode)
+  elem.parentNode.parentNode.removeChild(elem.parentNode) // percorre a árvore de elementos html para remover o li a qual eu cliquei
 
   LIST[elem.identificação].trash = true
 }
 
 
-// alvos dinâmicos
-
+/*
+@BRIEF localiza o alvo dinamicamente e de acordo com a tarefa localizada, remove ou valida a tarefa
+*/
 list.addEventListener('click', function(event){
   const element = event.target  // retorna o alvo clicado
-  const elementJob = element.attributes.job.value
+  const elementJob = element.attributes.job.value // armazena o valor do atributo clicado
 
   if(elementJob === 'complete'){
     completeToDo(element)
